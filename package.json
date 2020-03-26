@@ -1,0 +1,22 @@
+{
+  "name": "jsharmony-auth-windows",
+  "version": "0.0.0",
+  "description": "jsHarmony Auth Windows",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jsHarmony",
+    "JavaScript",
+    "Auth",
+    "LDAP"
+  ],
+  "author": "apHarmony <contact@apharmony.com> (http://www.apharmony.com/)",
+  "license": "LGPL-3.0",
+  "dependencies": {
+    "edge-js": "^13.0.1",
+    "jsharmony": "^1.0.0",
+    "jsharmony-factory": "^1.0.0"
+  }
+}
