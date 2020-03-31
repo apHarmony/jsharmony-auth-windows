@@ -23,6 +23,8 @@ var jsHarmonyAuthWindowsConfig = require('./jsHarmonyAuthWindowsConfig.js');
 var AuthWindows = require('./lib/AuthWindows');
 
 function jsHarmonyAuthWindows(name, options){
+  options = options || {};
+  options.schema = options.schema || 'jsharmony';
 
   var _this = this;
   jsHarmonyModule.call(this, name);
@@ -30,6 +32,8 @@ function jsHarmonyAuthWindows(name, options){
 
   if(name) _this.name = name;
   _this.typename = 'jsHarmonyAuthWindows';
+
+  _this.schema = options.schema;
 }
 
 jsHarmonyAuthWindows.prototype = new jsHarmonyModule()

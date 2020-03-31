@@ -1,0 +1,9 @@
+{
+  "/jsHarmonyFactory/Admin/SysUser": {
+    "inherits":"jsHarmonyFactory/Base/Admin/SysUser",
+    "fields":[
+      {"name":"sys_user_photo","actions":" "},
+      {"name":"sys_user_windows_account","type":"varchar","length":1024,"actions":"BIU","nl":1,"control":"textbox_VL","caption":"Windows Account","__AFTER__":"sys_user_email"}
+    ]
+  }
+}
