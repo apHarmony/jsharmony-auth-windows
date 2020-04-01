@@ -28,6 +28,7 @@ function jsHarmonyAuthWindowsConfig(){
   this.domain_controller = null;
   this.system_account_user_principal_name = null;
   this.system_account_password = null;
+  this.cache_authentication_seconds = 60;
 
   this.debug_params = {
     log_auth_timing: false,

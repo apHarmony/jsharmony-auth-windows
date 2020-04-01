@@ -46,7 +46,7 @@ jsHarmonyAuthWindows.prototype.Init = function(cb){
   var _this = this;
   if (_this.Config.auto_bind_main_site) {
     _this.jsh.Sites[_this.jsh.Modules.jsHarmonyFactory.mainSiteID].Merge({
-      auth: new AuthWindows(),
+      auth: new AuthWindows(_this.Config),
     });
   }
   if(cb) return cb();
