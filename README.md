@@ -39,3 +39,7 @@ Enable the module
 `configAuth.auto_bind_main_site = true;`
 
 Login with your *jsharmoy email* and *domain passwword*
+
+## Superlogin and client sites
+
+If using superuser login-as-user on a client site with password auth, you mush use the admin account's local password rather than it's domain account password to log in.
