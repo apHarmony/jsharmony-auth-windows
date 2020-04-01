@@ -17,6 +17,7 @@
   "dependencies": {
     "edge-js": "^13.0.1",
     "jsharmony": "^1.0.0",
-    "jsharmony-factory": "^1.0.0"
+    "jsharmony-factory": "^1.0.0",
+    "lodash": "^4.17.14"
   }
 }

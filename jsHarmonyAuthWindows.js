@@ -17,14 +17,16 @@ You should have received a copy of the GNU Lesser General Public License
 along with this package.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var _ = require('lodash');
 var jsHarmonyModule = require('jsharmony/jsHarmonyModule');
 var jsHarmonyFactory = require('jsharmony-factory');
 var jsHarmonyAuthWindowsConfig = require('./jsHarmonyAuthWindowsConfig.js');
 var AuthWindows = require('./lib/AuthWindows');
 
 function jsHarmonyAuthWindows(name, options){
-  options = options || {};
-  options.schema = options.schema || 'jsharmony';
+  options = _.extend({
+    schema: 'jsharmony'
+  }, options);
 
   var _this = this;
   jsHarmonyModule.call(this, name);

@@ -24,14 +24,21 @@ function jsHarmonyAuthWindowsConfig(){
   //jsHarmony Auth Windows module path
   this.moduledir = path.dirname(module.filename);
 
+  //Session token salt for main site
+  this.mainsalt = '';   //REQUIRED: Use a 60+ mixed character string
+  //Automatically overwrite the main site config to use windows auth
   this.auto_bind_main_site = true;
+  //Domain controller address if required; "LDAP://servername"
   this.domain_controller = null;
+  //If login is required to read, An account that can login to the ldap server and read pwdLastSet and userAccountControl, e.g. ldap@your.domain
   this.system_account_user_principal_name = null;
+  //Password for above account
   this.system_account_password = null;
+  //Cache session verification with the ldap server (e.g., account has not been disabled or had it's password changed). With no cache, verification will be done per-request (e.g. each js/css/image to render a page)
   this.cache_authentication_seconds = 60;
 
   this.debug_params = {
-    log_auth_timing: false,
+    log_auth_timing: false, //Record time to contact ldap server to log/console
   };
 }
 
