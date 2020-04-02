@@ -22,6 +22,7 @@ var jsHarmonyModule = require('jsharmony/jsHarmonyModule');
 var jsHarmonyFactory = require('jsharmony-factory');
 var jsHarmonyAuthWindowsConfig = require('./jsHarmonyAuthWindowsConfig.js');
 var AuthWindows = require('./lib/AuthWindows');
+var funcs = require('./models/_funcs.js');
 
 function jsHarmonyAuthWindows(name, options){
   options = _.extend({
@@ -36,18 +37,23 @@ function jsHarmonyAuthWindows(name, options){
   _this.typename = 'jsHarmonyAuthWindows';
 
   _this.schema = options.schema;
+  _this.funcs = new funcs(_this);
 }
 
 jsHarmonyAuthWindows.prototype = new jsHarmonyModule()
 
 jsHarmonyAuthWindows.prototype.onModuleAdded = function(jsh){
   var _this = this;
+  var mainSite = jsh.Sites[jsh.Modules.jsHarmonyFactory.mainSiteID];
+
+  mainSite.private_apps.push({'/_funcs/jsHarmonyAuthWindows/USER_LISTING': _this.funcs.req_userListing})
 }
 
 jsHarmonyAuthWindows.prototype.Init = function(cb){
   var _this = this;
+  var mainSite = _this.jsh.Sites[_this.jsh.Modules.jsHarmonyFactory.mainSiteID];
   if (_this.Config.auto_bind_main_site) {
-    _this.jsh.Sites[_this.jsh.Modules.jsHarmonyFactory.mainSiteID].Merge({
+    mainSite.Merge({
       auth: new AuthWindows(_this.Config),
     });
   }
