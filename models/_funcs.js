@@ -17,6 +17,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this package.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var _ = require('lodash');
 var Helper = require('jsharmony/Helper');
 var edge = require('edge-js');
 
@@ -31,6 +32,7 @@ var ListDomainUsers = edge.func(function() {/*
   {
     public string displayName;
     public string userPrincipalName;
+    public string distinguishedName;
   }
 
   public class Startup
@@ -55,6 +57,7 @@ var ListDomainUsers = edge.func(function() {/*
       ds.Filter = all_users_filter;
       ds.PropertiesToLoad.Add("userPrincipalName");
       ds.PropertiesToLoad.Add("displayName");
+      ds.PropertiesToLoad.Add("distinguishedName");
       SearchResultCollection users = ds.FindAll();
 
       var output = new List<Person>();
@@ -65,7 +68,8 @@ var ListDomainUsers = edge.func(function() {/*
         if (props["userprincipalname"].Count > 0 && props["displayname"].Count > 0) {
           var person = new Person() {
             displayName = (string)props["displayname"][0],
-            userPrincipalName = (string)props["userprincipalname"][0]
+            userPrincipalName = (string)props["userprincipalname"][0],
+            distinguishedName = (string)props["distinguishedName"][0]
           };
           output.Add(person);
         }
@@ -96,6 +100,31 @@ module.exports = exports = function(module) {
       all_users_filter: config.all_users_filter,
     }, function(err, users) {
       if(err) return cb(err);
+      _.forEach(users, function(user) {
+        if (!user.distinguishedName) return;
+        var parts = user.distinguishedName.split(',');
+        parts.shift(); // drop user's main CN
+        var dc_ou = _.partition(parts, function(part) {
+          return part.slice(0,2) == 'DC';
+        });
+        var dcs = dc_ou[0];
+        var ous = dc_ou[1];
+
+        // DC parts are dotted (jsharmony.com)
+        var doms = _.map(dcs, function(dc) {
+          return dc.slice(3);
+        });
+        var domain = doms.join('.');
+
+        //others parts are slashed like folders
+        // mainly OU, but the default "Users" is a CN
+        var names = _.map(ous, function(ou) {
+          return ou.slice(3);
+        });
+
+        names.push(domain);
+        user.folder = _.reverse(names).join('/');
+      });
       cacheValue = users;
       cacheTimeStamp = Date.now();
       cb(null, users);

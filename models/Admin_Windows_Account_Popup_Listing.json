@@ -12,7 +12,8 @@
     "getapi":"return _this.getapi(xmodel, apitype);",
     "fields":[
       {"name":"userPrincipalName","type":"varchar","actions":"B","key":1,"caption":"User Principal Name"},
-      {"name":"displayName","type":"varchar","actions":"B","caption":"Display Name"}
+      {"name":"displayName","type":"varchar","actions":"B","caption":"Display Name"},
+      {"name":"folder","type":"varchar","actions":"B","caption":"Folder"}
     ]
   }
 }  
