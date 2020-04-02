@@ -25,6 +25,7 @@ var jsHarmonyAuthWindows = require('jsharmony-auth-windows');
     configAuth.mainsalt = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";   //REQUIRED: Use a 60+ mixed character string    //configAuth.domain_controller = "LDAP://servername";
     //configAuth.system_account_user_principal_name = "ldap@your.domain";
     //configAuth.system_account_password = "password";
+    //configAuth.all_users_filter = "(&(objectClass=user))";
     //configAuth.cache_authentication_seconds = 60;
     //configAuth.debug_params.log_timing = true;
   }

@@ -40,6 +40,7 @@ var ListDomainUsers = edge.func(function() {/*
       string domain_controller = (string)input.domain_controller;
       string system_account_user_principal_name = (string)input.system_account_user_principal_name;
       string system_account_password = (string)input.system_account_password;
+      string all_users_filter = (string)input.all_users_filter;
 
       DirectoryEntry de;
       if (domain_controller != null && system_account_user_principal_name != null && system_account_password != null) {
@@ -51,7 +52,7 @@ var ListDomainUsers = edge.func(function() {/*
       }
 
       DirectorySearcher ds = new DirectorySearcher(de);
-      ds.Filter = string.Format("(&(objectClass=user))");
+      ds.Filter = all_users_filter;
       ds.PropertiesToLoad.Add("userPrincipalName");
       ds.PropertiesToLoad.Add("displayName");
       SearchResultCollection users = ds.FindAll();
@@ -92,6 +93,7 @@ module.exports = exports = function(module) {
       domain_controller: config.domain_controller,
       system_account_user_principal_name: config.system_account_user_principal_name,
       system_account_password: config.system_account_password,
+      all_users_filter: config.all_users_filter,
     }, function(err, users) {
       if(err) return cb(err);
       cacheValue = users;

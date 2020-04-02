@@ -34,6 +34,8 @@ function jsHarmonyAuthWindowsConfig(){
   this.system_account_user_principal_name = null;
   //Password for above account
   this.system_account_password = null;
+  //LDAP query to find all applicable users - used ONLY in account management to list accounts, not during authentication.
+  this.all_users_filter = "(&(objectClass=user))";
   //Cache session verification with the ldap server (e.g., account has not been disabled or had it's password changed). With no cache, verification will be done per-request (e.g. each js/css/image to render a page)
   this.cache_authentication_seconds = 60;
 
