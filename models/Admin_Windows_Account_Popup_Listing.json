@@ -1,0 +1,18 @@
+{
+  "Admin/Windows_Account_Popup_Listing": {
+    "source_files_prefix":"Admin_Windows_Account_Popup_Listing",
+    "layout":"grid",
+    "title":"Windows Accounts",
+    "unbound": true,
+    "actions":"B",
+    "caption":[0,"Account","Accounts"],
+    "sort":["^userPrincipalName"],
+    "grid_expand_search":1,
+    "hide_system_buttons" : ["clear"],
+    "getapi":"return _this.getapi(xmodel, apitype);",
+    "fields":[
+      {"name":"userPrincipalName","type":"varchar","actions":"B","key":1,"caption":"User Principal Name"},
+      {"name":"displayName","type":"varchar","actions":"B","caption":"Display Name"}
+    ]
+  }
+}  
