@@ -80,13 +80,24 @@ var ListDomainUsers = edge.func(function() {/*
 module.exports = exports = function(module) {
   var funcs = this;
   var config = module.Config;
+  var cacheValue;
+  var cacheTimeStamp = 0;
 
   funcs.userListing = function(cb) {
+    if (cacheValue && Date.now() - cacheTimeStamp < (5*60*1000)) {
+      setTimeout(cb, 0, null, cacheValue);
+      return;
+    }
     ListDomainUsers({
       domain_controller: config.domain_controller,
       system_account_user_principal_name: config.system_account_user_principal_name,
       system_account_password: config.system_account_password,
-    }, cb);
+    }, function(err, users) {
+      if(err) return cb(err);
+      cacheValue = users;
+      cacheTimeStamp = Date.now();
+      cb(null, users);
+    });
   }
 
   funcs.req_userListing = function(req, res, next) {
