@@ -3,7 +3,10 @@
     "inherits":"jsHarmonyFactory/Base/Admin/SysUser",
     "fields":[
       {"name":"sys_user_photo","actions":" "},
-      {"name":"sys_user_windows_account","type":"varchar","length":1024,"actions":"BIU","nl":1,"control":"textbox_L","caption":"Windows Account","__AFTER__":"sys_user_email",
+      {"name":"sys_user_pw1","captionstyle":"visibility:hidden;","controlstyle":"visibility:hidden;","default":"js:XExt.getSalt(20)"},
+      {"name":"sys_user_pw2","captionstyle":"visibility:hidden;","controlstyle":"visibility:hidden;","ongetvalue":"return xmodel.get('sys_user_pw1');"},
+      {"name":"sys_user_windows_account","type":"varchar","length":1024,"actions":"BIU","nl":1,"control":"textbox_M","caption":"Windows Account","__AFTER__":"sys_user_email",
+        "validate":["Required"],
         "popuplov": {
           "target":  "Admin/Windows_Account_Popup_Listing", "code_val": "userPrincipalName", "popupstyle": "height:400px;width:770px;",
           "onpopup": "jsh.App[popupmodelid].OnPopup(popupmodelid, parentmodelid, fieldid, onComplete);",
