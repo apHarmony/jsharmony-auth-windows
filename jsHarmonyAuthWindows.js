@@ -40,21 +40,33 @@ function jsHarmonyAuthWindows(name, options){
   _this.funcs = new funcs(_this);
 }
 
-jsHarmonyAuthWindows.prototype = new jsHarmonyModule()
+jsHarmonyAuthWindows.prototype = new jsHarmonyModule();
+
+function getMainSite(jsh){
+  if(jsh && jsh.Sites && jsh.Modules && jsh.Modules.jsHarmonyFactory){
+    return jsh.Sites[jsh.Modules.jsHarmonyFactory.mainSiteID];
+  }
+  return undefined;
+}
 
 jsHarmonyAuthWindows.prototype.onModuleAdded = function(jsh){
   var _this = this;
-  var mainSite = jsh.Sites[jsh.Modules.jsHarmonyFactory.mainSiteID];
-
-  mainSite.private_apps.push({'/_funcs/jsHarmonyAuthWindows/USER_LISTING': _this.funcs.req_userListing})
+  jsh.Config.onConfigLoaded.push(function(cb){
+    var mainSite = getMainSite(_this.jsh);
+    if(mainSite){
+      if(!mainSite.private_apps) mainSite.private_apps = [];
+      mainSite.private_apps.push({'/_funcs/jsHarmonyAuthWindows/USER_LISTING': _this.funcs.req_userListing})
+    }
+    return cb();
+  });
 }
 
 jsHarmonyAuthWindows.prototype.Init = function(cb){
   var _this = this;
-  var mainSite = _this.jsh.Sites[_this.jsh.Modules.jsHarmonyFactory.mainSiteID];
-  if (_this.Config.auto_bind_main_site) {
+  var mainSite = getMainSite(_this.jsh);
+  if (_this.Config.auto_bind_main_site_auth) {
     mainSite.Merge({
-      auth: new AuthWindows(_this.Config),
+      auth: new AuthWindows(mainSite, _this.Config)
     });
   }
   if(cb) return cb();

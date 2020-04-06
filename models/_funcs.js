@@ -55,9 +55,11 @@ var ListDomainUsers = edge.func(function() {/*
 
       DirectorySearcher ds = new DirectorySearcher(de);
       ds.Filter = all_users_filter;
+      ds.PropertiesToLoad.Add("cn");
       ds.PropertiesToLoad.Add("userPrincipalName");
       ds.PropertiesToLoad.Add("displayName");
       ds.PropertiesToLoad.Add("distinguishedName");
+      ds.PropertiesToLoad.Add("sAMAccountName");
       SearchResultCollection users = ds.FindAll();
 
       var output = new List<Person>();
@@ -65,11 +67,25 @@ var ListDomainUsers = edge.func(function() {/*
         SearchResult sr = users[r];
 
         ResultPropertyCollection props = sr.Properties;
-        if (props["userprincipalname"].Count > 0 && props["displayname"].Count > 0) {
+        string cn = "";
+        string displayName = "";
+        string userPrincipalName = "";
+        string distinguishedName = "";
+        string sAMAccountName = "";
+        if (props["cn"].Count > 0) cn = (string)props["cn"][0];
+        if (props["userprincipalname"].Count > 0) userPrincipalName = (string)props["userprincipalname"][0];
+        if (props["displayname"].Count > 0) displayName = (string)props["displayname"][0];
+        if (props["distinguishedName"].Count > 0) distinguishedName = (string)props["distinguishedName"][0];
+        if (props["sAMAccountName"].Count > 0) sAMAccountName = (string)props["sAMAccountName"][0];
+        if(userPrincipalName == "") userPrincipalName = sAMAccountName;
+        if(displayName == "") displayName = cn;
+        if(cn == "") displayName = userPrincipalName;
+        
+        if (userPrincipalName != "") {
           var person = new Person() {
-            displayName = (string)props["displayname"][0],
-            userPrincipalName = (string)props["userprincipalname"][0],
-            distinguishedName = (string)props["distinguishedName"][0]
+            displayName = displayName,
+            userPrincipalName = userPrincipalName,
+            distinguishedName = distinguishedName
           };
           output.Add(person);
         }

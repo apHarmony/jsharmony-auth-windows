@@ -21,11 +21,11 @@ var jsHarmonyAuthWindows = require('jsharmony-auth-windows');
 
   var configAuth = config.modules['jsHarmonyAuthWindows'];
   if (configAuth) {
-    configAuth.auto_bind_main_site = false;  //REQUIRED to bootstrap the admin account binding
-    configAuth.mainsalt = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";   //REQUIRED: Use a 60+ mixed character string    //configAuth.domain_controller = "LDAP://servername";
+    configAuth.auto_bind_main_site_auth = true;  //REQUIRED to automatically integrate with jsHarmony Factory
+    configAuth.domain_controller = "LDAP://servername"; //REQUIRED for authentication
     //configAuth.system_account_user_principal_name = "ldap@your.domain";
     //configAuth.system_account_password = "password";
-    //configAuth.all_users_filter = "(&(objectClass=user))";
+    //configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
     //configAuth.cache_authentication_seconds = 60;
     //configAuth.debug_params.log_timing = true;
   }
@@ -37,10 +37,10 @@ Go into the "Administration/System Users" menu and configure the `Windows Accoun
 
 Enable the module
 
-`configAuth.auto_bind_main_site = true;`
+`configAuth.auto_bind_main_site_auth = true;`
 
 Login with your *jsharmoy email* and *domain passwword*
 
 ## Superlogin and client sites
 
-If using superuser login-as-user on a client site with password auth, you mush use the admin account's local password rather than it's domain account password to log in.
+If using superuser login-as-user on a client site with password auth, you must use the admin account's local password rather than it's domain account password to log in.
