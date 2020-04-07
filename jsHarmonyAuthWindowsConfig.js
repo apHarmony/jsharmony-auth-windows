@@ -32,6 +32,10 @@ function jsHarmonyAuthWindowsConfig(){
   this.system_account_user_principal_name = null;
   //Password for above account
   this.system_account_password = null;
+  //LDAP query to find a user by their sys_user_windows_account name
+  this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}}))" // username@your.domain
+  //this.find_for_authentication_filter = "(&(objectClass=user)(sAMAccountName={{windows_account}}))" // username
+  //this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
   //LDAP query to find all applicable users - used ONLY in account management to list accounts, not during authentication.
   this.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
   //Cache session verification with the ldap server (e.g., account has not been disabled or had it's password changed). With no cache, verification will be done per-request (e.g. each js/css/image to render a page)

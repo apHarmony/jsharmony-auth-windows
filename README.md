@@ -21,11 +21,17 @@ var jsHarmonyAuthWindows = require('jsharmony-auth-windows');
 
   var configAuth = config.modules['jsHarmonyAuthWindows'];
   if (configAuth) {
-    configAuth.auto_bind_main_site_auth = true;  //REQUIRED to automatically integrate with jsHarmony Factory
+    configAuth.auto_bind_main_site_auth = false;  //REQUIRED to automatically integrate with jsHarmony Factory
+      // Value must be 'true' to use the module, but must be 'false' initially to allow system configuration.
+
     configAuth.domain_controller = "LDAP://servername"; //REQUIRED for authentication
     //configAuth.system_account_user_principal_name = "ldap@your.domain";
     //configAuth.system_account_password = "password";
+    //this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}}))" // username@your.domain
+    // or this.find_for_authentication_filter = "(&(objectClass=user)(sAMAccountName={{windows_account}}))" // username
+    // or this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
     //configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
+    // or configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))"; // members of a group
     //configAuth.cache_authentication_seconds = 60;
     //configAuth.debug_params.log_timing = true;
   }
