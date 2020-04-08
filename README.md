@@ -32,6 +32,8 @@ var jsHarmonyAuthWindows = require('jsharmony-auth-windows');
     // or this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
     //configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
     // or configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))"; // members of a group
+    //configAuth.idle_session_timeout = 24 * 60 * 60; // seconds (ex: 24 hours)
+    //configAuth.maximum_session_duration = 90 * 24 * 60 * 60; // seconds (ex: 90 days)
     //configAuth.cache_authentication_seconds = 60;
     //configAuth.debug_params.log_timing = true;
   }

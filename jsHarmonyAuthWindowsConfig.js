@@ -38,6 +38,11 @@ function jsHarmonyAuthWindowsConfig(){
   //this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
   //LDAP query to find all applicable users - used ONLY in account management to list accounts, not during authentication.
   this.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
+  //Expire session if the user has not accessed the system in this many seconds
+  this.idle_session_timeout = 24 * 60 * 60; // seconds (ex: 24 hours)
+  //Expire session if it has been at least this many seconds since the last full login
+  // e.g. they used it every day but have not provided a password in a long time.
+  this.maximum_session_duration = 90 * 24 * 60 * 60; // seconds (ex: 90 days)
   //Cache session verification with the ldap server (e.g., account has not been disabled or had it's password changed). With no cache, verification will be done per-request (e.g. each js/css/image to render a page)
   this.cache_authentication_seconds = 60;
 
