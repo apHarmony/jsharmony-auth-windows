@@ -27,14 +27,19 @@ var jsHarmonyAuthWindows = require('jsharmony-auth-windows');
     configAuth.domain_controller = "LDAP://servername"; //REQUIRED for authentication
     //configAuth.system_account_user_principal_name = "ldap@your.domain";
     //configAuth.system_account_password = "password";
-    //this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}}))" // username@your.domain
-    // or this.find_for_authentication_filter = "(&(objectClass=user)(sAMAccountName={{windows_account}}))" // username
-    // or this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
+
+    //this.authentication_filter = "(&(objectClass=user)({{userPrincipalName}}={{windows_account}}))" // username@your.domain
+    // On first authentication, {{userPrincipalName}} will be replaced with userPrincipalName
+    // On failed authentication, {{userPrincipalName}} will be replaced with sAMAccountName (for alternative validation)
+
+    // If requiring the user to be a member of a group:
+    // this.authentication_filter = "(&(objectClass=user)({{userPrincipalName}}={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
+
     //configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
     // or configAuth.all_users_filter = "(&(objectcategory=person)(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))"; // members of a group
     //configAuth.idle_session_timeout = 24 * 60 * 60; // seconds (ex: 24 hours)
     //configAuth.maximum_session_duration = 90 * 24 * 60 * 60; // seconds (ex: 90 days)
-    //configAuth.cache_authentication_seconds = 60;
+    //configAuth.authentication_cache_expiration = 60;
     //configAuth.debug_params.log_timing = true;
   }
 ```

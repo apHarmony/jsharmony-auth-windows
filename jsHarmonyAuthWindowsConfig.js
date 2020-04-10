@@ -33,9 +33,14 @@ function jsHarmonyAuthWindowsConfig(){
   //Password for above account
   this.system_account_password = null;
   //LDAP query to find a user by their sys_user_windows_account name
-  this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}}))" // username@your.domain
-  //this.find_for_authentication_filter = "(&(objectClass=user)(sAMAccountName={{windows_account}}))" // username
-  //this.find_for_authentication_filter = "(&(objectClass=user)(userPrincipalName={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
+
+  this.authentication_filter = "(&(objectClass=user)({{userPrincipalName}}={{windows_account}}))" // username@your.domain
+    // On first authentication, {{userPrincipalName}} will be replaced with "userPrincipalName"
+    // On failed authentication, {{userPrincipalName}} will be replaced with "sAMAccountName" (for alternative validation)
+
+    // If requiring the user to be a member of a group:
+    // this.authentication_filter = "(&(objectClass=user)({{userPrincipalName}}={{windows_account}})(memberof:1.2.840.113556.1.4.1941:=CN=jsHarmony Users,OU=Department,DC=YOUR,DC=DOMAIN))" // username@your.domain, member of group
+
   //LDAP query to find all applicable users - used ONLY in account management to list accounts, not during authentication.
   this.all_users_filter = "(&(objectcategory=person)(objectClass=user))";
   //Expire session if the user has not accessed the system in this many seconds
@@ -44,7 +49,7 @@ function jsHarmonyAuthWindowsConfig(){
   // e.g. they used it every day but have not provided a password in a long time.
   this.maximum_session_duration = 90 * 24 * 60 * 60; // seconds (ex: 90 days)
   //Cache session verification with the ldap server (e.g., account has not been disabled or had it's password changed). With no cache, verification will be done per-request (e.g. each js/css/image to render a page)
-  this.cache_authentication_seconds = 60;
+  this.authentication_cache_expiration = 60;
 
   this.debug_params = {
     log_auth_timing: false, //Record time to contact ldap server to log/console
