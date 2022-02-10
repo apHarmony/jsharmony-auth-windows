@@ -19,7 +19,6 @@ along with this package.  If not, see <http://www.gnu.org/licenses/>.
 
 var _ = require('lodash');
 var jsHarmonyModule = require('jsharmony/jsHarmonyModule');
-var jsHarmonyFactory = require('jsharmony-factory');
 var jsHarmonyAuthWindowsConfig = require('./jsHarmonyAuthWindowsConfig.js');
 var AuthWindows = require('./lib/AuthWindows');
 var funcs = require('./models/_funcs.js');
@@ -55,11 +54,11 @@ jsHarmonyAuthWindows.prototype.onModuleAdded = function(jsh){
     var mainSite = getMainSite(_this.jsh);
     if(mainSite){
       if(!mainSite.private_apps) mainSite.private_apps = [];
-      mainSite.private_apps.push({'/_funcs/jsHarmonyAuthWindows/USER_LISTING': _this.funcs.req_userListing})
+      mainSite.private_apps.push({'/_funcs/jsHarmonyAuthWindows/USER_LISTING': _this.funcs.req_userListing});
     }
     return cb();
   });
-}
+};
 
 jsHarmonyAuthWindows.prototype.Init = function(cb){
   var _this = this;
@@ -70,6 +69,6 @@ jsHarmonyAuthWindows.prototype.Init = function(cb){
     });
   }
   if(cb) return cb();
-}
+};
 
 module.exports = exports = jsHarmonyAuthWindows;

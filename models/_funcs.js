@@ -145,11 +145,10 @@ module.exports = exports = function(module) {
       cacheTimeStamp = Date.now();
       cb(null, users);
     });
-  }
+  };
 
   funcs.req_userListing = function(req, res, next) {
     var verb = req.method.toLowerCase();
-    var appsrv = this;
     var jsh = module.jsh;
 
     var model = jsh.getModel(req, 'jsHarmonyFactory/Admin/SysUser');
@@ -164,5 +163,5 @@ module.exports = exports = function(module) {
     } else {
       return next();
     }
-  }
-}
+  };
+};

@@ -9,11 +9,11 @@ jsh.App[modelid] = new(function() {
   _this.getapi = function(xmodel, apitype){
     if(apitype=='grid') return apiGrid;
     else if(apitype=='form') return null;
-  }
+  };
 
   _this.OnPopup = function(popupmodelid, parentmodelid, fieldid, onComplete){
     _this.userListing(onComplete);
-  }
+  };
 
   _this.userListing = function(onComplete){
     var emodelid = '../_funcs/jsHarmonyAuthWindows/USER_LISTING';
@@ -22,8 +22,8 @@ jsh.App[modelid] = new(function() {
       if (onComplete) onComplete();
     }, function (err) {
       //Optionally, handle errors
-      console.log('user listing error', err);
+      if(err) XExt.Alert('Error loading user listing: ' + err.toString());
       if (onComplete) onComplete();
     });
-  }
+  };
 });
